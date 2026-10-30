@@ -1,8 +1,8 @@
 # Wonder Lite
 
 A high-performance, optimized 2D demake of *Super Mario Bros. Wonder*, built from
-scratch in **Godot 4.7.2** with hand-rotoscoped, pre-rendered sprites and original
-artwork.
+scratch in **Godot 4.7.2**, with pre-rendered sprites captured from the original
+game and then cropped, cleaned and re-packed by hand.
 
 > **Status: pre-production.** The repository currently contains a bare Godot
 > project. Milestone 1 (boot -> loading -> title) is the first playable slice.
@@ -212,17 +212,23 @@ change) and run `python3 tools/progress.py` to refresh the percentages.
 ## 1. What this project is
 
 `Wonder Lite` recreates the *feel* and the *flow* of Super Mario Bros. Wonder in a
-lightweight 2D engine, without reusing a single asset from the original game.
+lightweight 2D engine that reuses the original game's art as source material,
+instead of drawing every asset from scratch.
 
-Every sprite, tile, background and sound is produced by this project:
+Most gameplay assets come from captured footage of the original game and are then
+processed by hand for this project:
 
-- Sprites are **rotoscoped**: reference animations are recorded from emulated
-  gameplay, traced/re-drawn frame by frame, and rendered as pre-rendered 2D art.
-- Backgrounds are removed manually, per frame.
-- Animations are authored at 1080p and packaged into texture atlases.
+- Frames are captured from emulated gameplay and isolated one by one; backgrounds
+  and overlapping elements are removed manually.
+- Damaged or occluded areas (cut edges, limbs hidden behind props, HUD overlaps)
+  are re-drawn by hand, in a process close to **rotoscoping**.
+- Every frame is normalized to a fixed pivot and baseline, trimmed of empty
+  space, deduplicated, and packed into per-entity atlases.
+- Animations are rebuilt frame by frame at 1080p, which is what keeps the game
+  fast while using high-detail art.
 
-The result is a demake in the same spirit as a fan re-imagining: recognizable
-gameplay language, entirely original assets.
+The result is a demake in the same spirit as a fan re-imagining: the original's
+visual language and gameplay flow, rebuilt on a lighter engine.
 
 > **AI-assisted, human-reviewed.** This project is developed with AI assistance.
 > AI is used for scaffolding, boilerplate and implementation drafts, but **every
@@ -293,14 +299,24 @@ Pre-rendered 2D: soft shapes, painted gradients and lighting, but with a
 restrained palette and flat, readable silhouettes at gameplay scale. Think
 "modern 2.5D art flattened into crisp 2D", not pixel art.
 
+Most of that art is not drawn from zero: it is captured from the original game and
+then cut, cleaned and re-packed by hand until it behaves like a native 2D asset.
+Characters, tiles, props, backgrounds and part of the UI all go through this
+process. Where a frame is too damaged, occluded or low quality to be salvaged, it
+is redrawn to match the rest of the set.
+
 ### Production loop
 
-1. Record reference footage from emulated gameplay.
-2. Pick and stabilize frames (`ffmpeg`).
-3. Rotoscope / re-draw each frame over the reference.
-4. Remove the background manually.
+1. Record gameplay from the emulated original game and keep it as the source
+   material.
+2. Pick and stabilize frames (`ffmpeg`), dropping duplicates and frames that are
+   too motion-blurred to use.
+3. Crop and isolate the subject frame by frame, removing the background, HUD,
+   particles and any overlapping object by hand.
+4. Repair the result: fill cut edges, erase leftovers, redraw occluded limbs and
+   shadows, and correct frames that break the silhouette.
 5. Normalize the frame: consistent canvas, pivot at **feet center**, baseline on
-   the last visible row.
+   the last visible row, trimmed to the used pixels.
 6. Export PNG frames + an animation manifest.
 7. Pack atlases and generate `SpriteFrames` resources.
 
@@ -313,6 +329,25 @@ tools/
   build_spriteframes.gd  # headless Godot: manifest -> .tres SpriteFrames
   check_sprites.gd       # validates naming, size, pivot and empty frames
 ```
+
+### Manual cleanup and performance
+
+Cropping and editing every frame by hand is not only an art task, it is what makes
+the game run well:
+
+- Frames are trimmed to their opaque bounds and deduplicated, so atlases hold only
+  the pixels that are actually drawn.
+- Atlases are split per entity family, which keeps texture memory predictable and
+  avoids one huge sheet that would not fit on mobile GPUs.
+- Animations play at 12-24 fps with reused drawings instead of 60 unique frames,
+  matching the original's hand-drawn cadence.
+- Effects that the original renders with dozens of overlapping sprites are baked
+  into fewer frames wherever the result is indistinguishable in motion.
+- Art is authored once at 1080p; mobile lowers the render resolution instead of
+  shipping a second set of assets.
+
+This is also the part of the project where most time goes: a single character
+animation can take hours of per-frame cleanup before it looks clean at 1080p.
 
 ### Asset conventions
 
@@ -568,13 +603,22 @@ dropped in last, so gameplay is never blocked by asset production.
 ## 12. Licensing
 
 - **Source code:** Apache License 2.0 (see `LICENSE`).
-- **Original art, audio and design assets produced for this project:**
-  CC BY-NC-SA 4.0 - share alike, non-commercial.
-- **No assets from the original game are included.** Reference footage is used
-  only as a tracing guide during production and is never shipped.
+- **Assets derived from the original game:** most character, enemy, block, tile,
+  background, UI and audio assets are captured from *Super Mario Bros. Wonder* and
+  then cropped and edited by hand for this project. They remain the property of
+  Nintendo and are **not** covered by the Apache license, by CC BY-NC-SA, or by
+  any other license granted here. The edits made in this repository do not create
+  new ownership over them. This includes the current project icon, which is
+  official key art used as a temporary placeholder.
+- **Assets created from scratch for this project:** CC BY-NC-SA 4.0 - share
+  alike, non-commercial. This applies only to pieces that do not derive from
+  Nintendo material.
+- **No ROM data is distributed.** Everything is stored as edited sprites, audio
+  and scene data; the game never loads an original ROM.
 - *Super Mario Bros. Wonder*, Mario and related characters are trademarks of
-  Nintendo. This project is a non-commercial fan work, unaffiliated with
-  Nintendo.
+  Nintendo. This is a non-commercial fan work, unaffiliated with and not endorsed
+  by Nintendo, shared for preservation and learning purposes. It will be taken
+  down if requested by the rights holder.
 
 ---
 
