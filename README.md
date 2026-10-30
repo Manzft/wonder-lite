@@ -1,4 +1,4 @@
-# wonder-lite
+# Wonder Lite
 
 A high-performance, optimized 2D demake of *Super Mario Bros. Wonder*, built from
 scratch in **Godot 4.7.2** with hand-rotoscoped, pre-rendered sprites and original
@@ -11,7 +11,7 @@ artwork.
 
 ## 1. What this project is
 
-`wonder-lite` recreates the *feel* and the *flow* of Super Mario Bros. Wonder in a
+`Wonder Lite` recreates the *feel* and the *flow* of Super Mario Bros. Wonder in a
 lightweight 2D engine, without reusing a single asset from the original game.
 
 Every sprite, tile, background and sound is produced by this project:
