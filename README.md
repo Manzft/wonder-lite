@@ -7,6 +7,206 @@ artwork.
 > **Status: pre-production.** The repository currently contains a bare Godot
 > project. Milestone 1 (boot -> loading -> title) is the first playable slice.
 
+## Progress
+
+<!-- progress:start -->
+
+```text
+Alpha 0.1.0   [█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]   3%  1/39 tasks
+Main courses  [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]   0%  0/68 courses
+```
+
+<!-- progress:end -->
+
+Both bars are live: tick a task in the collapsible lists below (GitHub saves the
+change) and run `python3 tools/progress.py` to refresh the percentages.
+
+- **Alpha 0.1.0** tracks the first playable slice: boot, loading, title, user
+  select and a finishable Level 1.
+- **Main courses** tracks the regular courses of the original campaign, i.e.
+  enough content to say the game can be played from start to finish. It excludes
+  collectibles, playable characters, Badge Challenges, Break Time and KO Arena
+  stages, and the hidden Special World. Course counts are approximate and may
+  change once the demake's course list is finalized.
+
+<details>
+<summary><b>Alpha 0.1.0 - first playable slice</b></summary>
+
+<!-- progress:alpha:start -->
+
+### M0 - Skeleton
+
+- [x] Repository, Apache-2.0 license and README
+- [ ] `project.godot`: 1920x1080 viewport, nearest filter, input map, collision layers
+- [ ] Autoload skeleton (`Game`, `SceneFlow`, `Audio`, `Settings`, `Events`)
+- [ ] Folder structure and placeholder scenes
+
+### M1 - Loading screen
+
+- [ ] Loading visuals: flower animation, progress bar, rotating tips
+- [ ] `SceneFlow`: threaded loading, real progress, minimum display time, fades
+
+### M2 - Title screen
+
+- [ ] Layout with placeholder concept art and logo
+- [ ] Blinking "Press START" prompt and confirm input
+
+### M3 - User select
+
+- [ ] Six-slot layout with placeholder avatars
+- [ ] Placeholder "create user" dialog
+- [ ] Focus navigation (keyboard, gamepad, mouse)
+- [ ] Selecting a slot loads Level 1
+
+### M4 - Level greybox
+
+- [ ] W1-1 layout built as `TileMapLayer` terrain
+- [ ] Camera with dead zone, look-ahead and level bounds
+- [ ] Player locomotion: walk, run, skid, jump, crouch
+- [ ] Player animation state machine
+
+### M5 - Level objects
+
+- [ ] `?` blocks, Brick Blocks and bump/break feedback
+- [ ] Coins and flower coins
+- [ ] Pipes: enter, travel between ends, sideways exits
+- [ ] Goomba: walk, turn, squash
+- [ ] Sleeping Goomba: idle, wake, walk
+
+### M6 - Power-ups
+
+- [ ] Small / Super / damage states
+- [ ] Elephant Fruit: transform and trunk attack
+- [ ] Trunk water and refilling fountains
+
+### M7 - Wonder effect
+
+- [ ] Wow Buds: hit, spawn blocks and coins
+- [ ] Wonder Flower trigger, pipe eyes and bobbing pipes
+- [ ] Inchworm Pipe
+- [ ] Wonder Seed pickup and effect end
+
+### M8 - Gameplay loop
+
+- [ ] HUD: coins, seeds, lives, timer
+- [ ] Checkpoint flag and respawn point
+- [ ] Death, respawn and pit detection
+- [ ] Goal Pole and Course Clear screen
+- [ ] Talking Flowers with proximity quotes
+- [ ] Localization EN + ES
+- [ ] Audio buses and SFX/music hooks
+
+### M9 - Art pass
+
+- [ ] Player sprite set (all states and forms)
+- [ ] Enemy, block and prop sprites
+- [ ] Tileset and background art
+- [ ] UI art: title, loading, HUD, course clear
+
+
+<!-- progress:alpha:end -->
+
+</details>
+
+<details>
+<summary><b>Main courses - regular campaign levels</b></summary>
+
+<!-- progress:courses:start -->
+
+### Pipe-Rock Plateau
+
+- [ ] Welcome to the Flower Kingdom!
+- [ ] Piranha Plants on Parade
+- [ ] Scram, Skedaddlers!
+- [ ] Bulrush Coming Through!
+- [ ] Here Come the Hoppos
+- [ ] Rolla Koopa Derby
+- [ ] Swamp Pipe Crawl
+- [ ] Angry Spikes and Sinkin' Pipes
+- [ ] Bulrush Express
+- [ ] Sproings in the Twilight Forest
+- [ ] Cosmic Hoppos
+- [ ] Pipe-Rock Plateau Palace
+
+### Fluff-Puff Peaks
+
+- [ ] Outmaway Valley
+- [ ] Pokipede Pass
+- [ ] Condarts Away!
+- [ ] Pole Block Passage
+- [ ] Up 'n' Down with Puffy Lifts
+- [ ] Jump! Jump! Jump!
+- [ ] Countdown to Drop Down
+- [ ] Cruising with Linking Lifts
+- [ ] Fluff-Puff Peaks Flying Battleship
+- [ ] Fluff-Puff Peaks Palace
+
+### Shining Falls
+
+- [ ] The Hoppycat Trial: Hop, Hop, and Awaaay
+- [ ] The Anglefish Trial: Ready, Aim, Fly!
+- [ ] The Midway Trial: Hop to It
+- [ ] The Sharp Trial: Launch to Victory
+- [ ] The Sugarstar Trial: Across the Night Sky
+- [ ] The Final Trial: Zip Track Dash
+
+### Sunbaked Desert
+
+- [ ] Armads on the Roll
+- [ ] The Desert Mystery
+- [ ] Rolling-Ball Hall
+- [ ] Ninji Jump Party
+- [ ] Bloomps of the Desert Skies
+- [ ] Valley Fulla Snootles
+- [ ] Color-Switch Dungeon
+- [ ] Secrets of Shova Mansion
+- [ ] Flight of the Bloomps
+- [ ] Sunbaked Desert Palace
+
+### Fungi Mines
+
+- [ ] Upshroom Downshroom
+- [ ] Taily's Toxic Pond
+- [ ] Light-Switch Mansion
+- [ ] Beware of the Rifts
+- [ ] An Uncharted Area: Wubba Ruins
+- [ ] Another Uncharted Area: Swaying Ruins
+- [ ] A Final Uncharted Area: Poison Ruins
+- [ ] Fungi Mines Palace
+
+### Deep Magma Bog
+
+- [ ] Where the Rrrumbas Rule
+- [ ] Raarghs in the Ruins
+- [ ] Pull, Turn, Burn
+- [ ] Hot-Hot Hot!
+- [ ] Wavy Ride through the Magma Tube
+- [ ] Dragon Boneyard
+- [ ] Deep Magma Bog Flying Battleship
+- [ ] Deep Magma Bog Palace
+
+### Petal Isles
+
+- [ ] Leaping Smackerel
+- [ ] Robbird Cove
+- [ ] Blewbird Roost
+- [ ] Downpour Uproar
+- [ ] Jewel-Block Cave
+- [ ] Gnawsher Lair
+- [ ] Maw-Maw Mouthful
+- [ ] Muncher Fields
+- [ ] Petal Isles Flying Battleship
+- [ ] Missile Meg Mayhem
+- [ ] High-Voltage Gauntlet
+- [ ] Evade the Seeker Bullet Bills!
+- [ ] KnuckleFest Bowser's Blazing Beats
+- [ ] The Final Battle! Bowser's Rage Stage
+
+
+<!-- progress:courses:end -->
+
+</details>
+
 ---
 
 ## 1. What this project is
@@ -359,6 +559,9 @@ dropped in last, so gameplay is never blocked by asset production.
   repeated behaviour becomes a component under `scripts/components/`.
 - **No magic numbers in gameplay:** tuning values live in exported resources or
   a single constants file per system.
+- **Progress bars:** the two bars at the top of this README are generated from
+  the task lists by `python3 tools/progress.py`; run it after ticking a task so
+  the percentages stay honest.
 
 ---
 
